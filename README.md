@@ -1,362 +1,242 @@
-# My NeoVim Config (A NeoVim Config for Colemak Users)
-
-#### [中文版README](./README_cn.md) by [@EvanMeek](https://github.com/EvanMeek)
+# NeoVim配置文件
 
 ![demo](./demo.png)
 
-Please **DO NOT** just copy this config without really looking at it! Please, at least, read this README file!
+**请不要**只复制配置文件，而不看其内容! 请至少阅读本自述文件!
 
-## Index
-- [Things to Know After Installation](#after-installation%2C-you-need-to%3A)
-- [Keyboard Shortcuts](#keyboard-shortcuts)
-	- [1. Basic Keyboard Shortcuts](#1-basic-editor-features)
-		- [1.1 The Most Basics](#1.1-the-most-basics)
-		- [1.2 Remapped Cursor Movement](#1.2-remapped-cursor-movement)
-		- [1.3 Remapped Insert Mode Keys](#1.3-remapped-insert-mode-keys)
-		- [1.4 Remapped Text Manipulating Commands in Normal Mode](#1.4-remapped-text-manipulating-commands-in-normal-mode)
-		- [1.5 Other Useful Normal Mode Remapping](#1.5-other-useful-normal-mode-remapping)
-	- [2. Window Management](#2-window-management)
-		- [2.1 Creating Window Through Split Screen](#2.1-creating-window-through-split-screen)
-		- [2.2 Moving the Cursor Between Different Windows](#2.2-moving-the-cursor-between-different-windows)
-		- [2.3 Resizing Different Windows](#2.3-resizing-different-windows)
-		- [2.4 Closing Windows](#2.4-closing-windows)
-	- [3. Tab Management](#3-tab-management)
-	- [4. Terminal Keyboard Shortcuts](#4-terminal-keyboard-shortcuts)
-- [Plugin Shortcuts](#plugins)
-	- AutoComplete / Snippets
-		- [COC](#for-code-autocomplete---coc)
-		- [Ultisnips](#ultisnips)
-	- File Browsing/Management
-		- [NERDTree](#nerdtree)
-		- [Ranger.vim](#ranger.vim---file-browser)
-		- [FZF](#fzf---the-fuzzy-file-finder)
-	- Git
-		- [GV](#gv---commit-browser)
-		- [GitGutter](#gitgutter)
-		- [fzf-gitignore](#fzf-gitignore)
-	- Find / Replace
-		- [far.vim](#far.vim---find-and-replace)
-	- Text Editing
-		- [vim-table-mode](#vim-table-mode)
-		- [vim-multiple-cursors](#vim-multiple-cursors)
-		- [vim-surround](#vim-surround)
-	- Editor Enhancement
-		- [Vista.vim](#vista.vim) (Taglist)
-		- [Undotree](#undotree)
-		- [vim-startify](#vim-startify---startup-screen) (Startup Screen)
-		- [vim-signiture](#vim-signiture---bookmarks) (Bookmarks)
-		- [vim-calc](#vim-calc)
-		- [AutoFormat](#autoformat)
-		- [Goyo](#goyo---work-without-distraction) (Remove distractions)
-	- Vim Apps
-		- [vim-calendar](#vim-calendar)
-- [Custom Markdown Snippets](#custom-snippets)
-- [Other Weird Stuff](#other-weird-stuff)
+## 安装后, 您需要:
 
+- [ ] 安装 `pynvim` (pip)
+- [ ] 安装 `nodejs`
+- [ ] 安装 `the_silver_searcher`
+- [ ] 安装 nerd-fonts (此选项为可选，但使用nerd-font后，看起来真的不错)
 
-## After Installation, You Need To:
+## 安装后，你可能需要做:
 
-- [ ] Install `pynvim` (pip)
-- [ ] Install `nodejs`, and do `npm install -g neovim`
-- [ ] Install nerd-fonts (actually it's optional but it looks real good)
+#### 首先
+- [ ] 执行 `:checkhealth`
 
-## After Installation, You Might Want To:
-#### First of all
-- [ ] Do `:checkhealth`
+#### 配置 `Python` 路径
+- [ ]  确保你有Python
+- [ ] 编辑 `_machine_specific.vim` 进行配置
 
-#### Config `Python` path
-- [ ] Well, make sure you have python
-- [ ] See `_machine_specific.vim`
-
-#### For Code AutoComplete - coc
+#### 用于 Code AutoComplete (coc 一款代码自动补全插件)
 Python:
-- [ ] Do `pip3 install flake8` (for linting)
+- [ ] 执行 `pip3 install flake8` (用于代码检查)
 
-#### For Taglist:
-- [ ] Install `ctags` for function/class/variable list
+#### 用于函数/类/变量列表:
+- [ ] 安装 `ctags` 用于显示函数/类/变量列表
 
-#### For Denite:
-- [ ] Install `ripgrep`
-- [ ] Install `fd`
+#### 用于输入ASCII艺术字
+- [ ] 安装 `figlet`
 
-#### And also...
-- [ ] Install `figlet` for inputing text ASCII art
-- [ ] Install `xclip` for system clipboard access (`Linux` and `xorg` only)
+## `NORMAL` (`COMMAND`) 模式的键盘快捷键
+### 1 基本命令
+#### 1.1 最基础的
+**`k`** : 切换到 **`INSERT`** :(插入) 模式, 等价于默认快捷键 `i`
 
-## Keyboard Shortcuts
-### 1 Basic Editor Features
-#### 1.1 The Most Basics
-**`k`** : to switch to **`INSERT`** : mode, equals to key `i`
+**`Q`** : 退出当前vim窗口, 等价于默认快捷键 `:q`
 
-**`Q`** : quit current vim window, equals to command `:q`
+**`S`** : 保存当前文件, 等价于默认快捷键 `:w`
 
-**`S`** : save the current file, equals to command `:w`
+**_注意_**
 
-**_IMPORTANT_**
+  由于`i`键已经被映射为`k`键，所以每个涉及到`i`的命令(组合)都应该使用`k`(例如，`ciw`应该改为`ckw`)
 
-  Since the `i` key has been mapped to `k`, every command (combination) that involves `i` should use `k` instead (for example, `ciw` should be `ckw`).
+#### 1.2 重新映射的光标移动
 
-#### 1.2 Remapped Cursor Movement
-| Shortcut   | Action                                                    | Equivalent |
-|------------|-----------------------------------------------------------|------------|
-| `u`        | Cursor up a terminal line                                 | `k`        |
-| `e`        | Cursor down a terminal line                               | `j`        |
-| `n`        | Cursor left                                               | `h`        |
-| `i`        | Cursor right                                              | `l`        |
-| `U`        | Cursor up 5 terminal lines                                | `5k`       |
-| `E`        | Cursor down 5 terminal lines                              | `5j`       |
-| `N`        | Cursor to the start of the line                           | `0`        |
-| `I`        | Cursor to the end of the line                             | `$`        |
-| `Ctrl` `u` | Move the view port up 5 lines without moving the cursor   | `Ctrl` `y` |
-| `Ctrl` `e` | Move the view port down 5 lines without moving the cursor | `Ctrl` `e` |
-| `h`        | Move to the end of this word                              | `e`        |
-| `W`        | Move cursor five words forward                            | `5w`       |
-| `B`        | Move cursor five words forward                            | `5b`       |
+| 命令       | 功能                    | 等价于 (QWERTY键位布局) |
+|------------|-------------------------|-------------------------|
+| `k`        | 光标向上移动一行        | `k`                     |
+| `j`        | 光标向下移动一行        | `j`                     |
+| `h`        | 光标向左移动            | `h`                     |
+| `l`        | 光标向右移动            | `l`                     |
+| `U`        | 光标向上移动5行         | `5k`                    |
+| `E`        | 光标向下移动5行         | `5j`                    |
+| `N`        | 光标移动至行首          | `0`                     |
+| `I`        | 光标移动至行尾          | `$`                     |
+| `Ctrl` `u` | 不移动光标，向上滚屏5行 | `Ctrl` `y`              |
+| `Ctrl` `e` | 不移动光标，向下滚屏5行 | `Ctrl` `e`              |
+| `h`        | 光标移动至单词末尾      | `e`                     |
 
-#### 1.3 Remapped Insert Mode Keys
-| Shortcut   | Action                                                               |
-|------------|----------------------------------------------------------------------|
-| `Ctrl` `a` | Move cursor to the end of the line                                   |
-| `Ctrl` `u` | Move the character on the right of the cursor to the end of the line |
+#### 1.3 重新映射的编辑器命令
+| 快捷键 | 所执行操作 |
+|--------|------------|
+| `u`    | 撤销       |
 
-#### 1.4 Remapped Text Manipulating Commands in Normal Mode
-| Shortcut        | Action                                |
-|-----------------|---------------------------------------|
-| `l`             | **undo**                              |
-| `<`             | Un-indent                             |
-| `>`             | Indent                                |
-| `Ctrl` `a`      | Increase the number under cursor by 1 |
-| `Ctrl` `x`      | Decrease the number under cursor by 1 |
-| `SPACE` `SPACE` | Goto the next placeholder (`<++>`)    |
+#### 1.4 其他需要知道的命令
+| 快捷键  | 所执行操作           |
+|---------|----------------------|
+| `<C-i>` | 跳转至下一个光标位置 |
+| `<C-o>` | 跳转至上一个光标位置 |
+| `<C-a>` | 将光标后的数字增加1  |
+| `<C-x>` | 将光标后的数字减少1  |
+| `z=`    | 显示单词拼写建议     |
+| `H`     | 将两行合并为一行     |
+| `<`     | 减少缩进             |
+| `>`     | 增加缩进             |
 
-#### 1.5 Other Useful Normal Mode Remapping
-| Shortcut        | Action                                 |
-|-----------------|----------------------------------------|
-| `r`             | **Compile/Run the current file**       |
-| `Y`             | Copy selected text to system clipboard |
-| `z` `=`         | Show spell suggestions                 |
-| `SPACE` `s` `c` | Toggle spell suggestion a              |
-| `SPACE` `d` `w` | Find adjacent duplicated word          |
-| `SPACE` `t` `t` | Convert every 4 Spaces to a tab        |
-| `SPACE` `o`     | Fold                                   |
-| `SPACE` `-`     | Previous quick-fix position            |
-| `SPACE` `+`     | Next quick-fix position                |
-| `\` `p`         | Show the path of the current file      |
 
-### 2 Window Management
-#### 2.1 Creating Window Through Split Screen
-| Shortcut    | Action                                                                      |
-|-------------|-----------------------------------------------------------------------------|
-| `s` `u`     | Create a new horizontal split screen and place it above the current window  |
-| `s` `e`     | Create a new horizontal split screen and place it below the current window  |
-| `s` `n`     | Create a new vertical split screen and place it left to the current window  |
-| `s` `i`     | Create a new vertical split screen and place it right to the current window |
-| `s` `v`     | Set the two splits to be vertical                                           |
-| `s` `h`     | Set the two splits to be horizontal                                         |
-| `s` `r` `v` | Rotate splits and arrange splits vertically                                 |
-| `s` `r` `h` | Rotate splits and arrange splits horizontally                               |
+### 2 窗口管理
+#### 2.1 分屏
+| 命令  | 功能                                       |
+|-------|--------------------------------------------|
+| `su`  | 新建一个水平分割的窗口，放置当前窗口下方   |
+| `se`  | 新建一个水平分割的窗口，放置当前窗口上方   |
+| `sn`  | 新建一个垂直分割的窗口，放置在当前窗口左侧 |
+| `si`  | 新建一个垂直分割的窗口，放置在当前窗口右侧 |
+| `sv`  | 设置两个分屏为垂直分割                     |
+| `sh`  | 设置两个分屏为水平分割                     |
+| `srv` | 将当前分屏设置为垂直分割                   |
+| `srh` | 将当前分屏设置为水平分割                   |
 
-#### 2.2 Moving the Cursor Between Different Windows
-| Shortcut      | Action                         |
-|---------------|--------------------------------|
-| `SPACE` + `w` | Move cursor to the next window |
-| `SPACE` + `n` | Move cursor one window left    |
-| `SPACE` + `i` | Move cursor one window right   |
-| `SPACE` + `u` | Move cursor one window up      |
-| `SPACE` + `e` | Move cursor one window down    |
+#### 2.2 在窗口（分屏）之间移动光标
+| Shortcut        | Action                 |
+|-----------------|------------------------|
+| `<SPACE>` + `w` | 将光标移动到下一个窗口 |
+| `<SPACE>` + `l` | 将光标移动到左边的窗口 |
+| `<SPACE>` + `h` | 将光标移动到右边的窗口 |
+| `<SPACE>` + `j` | 将光标移动到上边的窗口 |
+| `<SPACE>` + `k` | 将光标移动到下边的窗口 |
 
-#### 2.3 Resizing Different Windows
-Use the arrow keys to resize the current window.
+#### 2.3 调整窗口大小
+使用方向键调整当前窗口大小。
 
-#### 2.4 Closing Windows
-| Shortcut    | Action                                                                                                     |
-|-------------|------------------------------------------------------------------------------------------------------------|
-| `Q`         | Close the current window                                                                                   |
-| `SPACE` `q` | Close the window below the current window. (The current window will be closed if there is no window below) |
+#### 2.4 区域选择
+Visual Block 区域选择，这里的Visual表示视觉，图像，可视化。
+从上到下，选择的区域越来越大。三个模式之间可以任意切换，重复命令就是退出。
+区域选择在一般模式下，选择的区域包括固定黑色，闪动黑色，闪动黑色表示光标位置。
+在区域选择的情况下，d删除选择的区域，y复制选择的区域，p粘贴选择的区域，小写p在当前行的下一行粘贴。大写P在当前行的上一行粘贴
++ 1.小写v：字符选择
++ 2.shift+v（大写V）：行选择
++ 3.ctrl+v：矩形选择
 
-### 3 Tab Management
-| Shortcut    | Action           |
-|-------------|------------------|
-| `t` `u`     | Create a new tab |
-| `t` `n`     | Go one tab left  |
-| `t` `i`     | Go One tab right |
-| `t` `m` `n` | Move tab left    |
-| `t` `m` `i` | Move tab right   |
+## 插件
+#### NERDCommenter （批量注释与反注释插件）
+- `<leader>`ca在可选的注释方式之间切换，比如C/C++ 的块注释/* */和行注释//
+- `<leader>`cc注释当前行
+- `<leader>`c`<space>` 切换注释/非注释状态
+- `<leader>`cs 以”性感”的方式注释
+- `<leader>`cA 在当前行尾添加注释符，并进入Insert模式
+- `<leader>`cu 取消注释
+- `<leader>`c$ 从光标开始到行尾注释  ，这个要说说因为c$也是从光标到行尾的快捷键，这个按过（`<leader>`）要快一点按c$
+- count`<leader>`cc 光标以下count行添加注释(2 cc)
+- count`<leader>`cu 光标以下count行取消注释(2 cu)
+- count`<leader>`cm:光标以下count行添加块注释(2 cm)
+Normal模式下，几乎所有命令前面都可以指定行数
+Visual模式下执行命令，会对选中的特定区块进行注释/反注释
 
-### 4 Terminal Keyboard Shortcuts
-| Shortcut    | Action                                                      |
-|-------------|-------------------------------------------------------------|
-| `SPACE` `/` | Create a new split with a terminal below the current window |
-| `Ctrl` `n`  | Escape from terminal input mode                             |
-
-## Plugins
-#### COC (AutoCompletion)
-| Shortcut        | Action                    |
-|-----------------|---------------------------|
-| `Space` `y`     | **Get yank history list** |
-| `gd`            | Go to definition          |
-| `gr`            | List references           |
-| `gi`            | List implementation       |
-| `gy`            | Go to type definition     |
-| `Space` `r` `n` | Rename a variable         |
-
-#### Ultisnips
-| Shortcut   | Action                                           |
-|------------|--------------------------------------------------|
-| `Ctrl` `e` | Expand a snippet                                 |
-| `Ctrl` `n` | (in snippet) Previous Cursor position in snippet |
-| `Ctrl` `e` | (in snippet) Next Cursor position in snippet     |
+#### COC (一款代码自动补全插件)
+| Shortcut    | Action                          |
+|-------------|---------------------------------|
+| `Space` `y` | 获取(yank)(vim的剪切板)历史列表 |
+| `gd`        | 跳转至定义                      |
+| `gr`        | 列出引用                        |
+| `gi`        | 列出实现                        |
+| `gy`        | 跳转至类型定义                  |
 
 #### NERDTree
-| Shortcut          | Action              |
-|-------------------|---------------------|
-| `tt`              | **Toggle NerdTree** |
-| `I`               | Open in new split   |
-| `O`               | Open in new tab     |
-| `l`               | Change root         |
-| `z` `h`           | Toggle hidden       |
-| `,` (in NERDTREE) | Toggle menu         |
-
-#### GitGutter
-| Shortcut        | Action                            |
-|-----------------|-----------------------------------|
-| `H`             | **Show git hunk at current line** |
-| `SPACE` `g` `-` | Go to previous git hunk           |
-| `SPACE` `g` `+` | Go to next git hunk               |
-| `SPACE` `g` `f` | Fold everything except hunks      |
-
-#### vim-table-mode
-| Shortcut        | Action            |
-|-----------------|-------------------|
-| `SPACE` `t` `m` | Toggle table mode |
-| `SPACE` `t` `r` | Realign table     |
-
-See `:help table-mode.txt` for more.
+| Shortcut          | Action       |
+|-------------------|--------------|
+| `tt`              | 开关NerdTree |
+| `,` (in NERDTREE) | 开关菜单     |
 
 #### Vista.vim
-| Shortcut   | Action                              |
-|------------|-------------------------------------|
-| `T`        | toggle function and variable list   |
-| `Ctrl` `t` | open function/class/variable finder |
+键入`T`(`Shift`+`t`)打开函数/类/变量列表。
 
-#### FZF - the fuzzy file finder
-| Shortcut   | Action           |
-|------------|------------------|
-| `Ctrl` `p` | **Active FZF**   |
-| `Ctrl` `u` | Move up 1 item   |
-| `Ctrl` `e` | Move down 1 item |
+键入`Ctrl`+`t`打开函数/类/变量查找窗口。
+
+键入`q`退出Vista.vim
+
+#### FZF (模糊查找文件器)
+| 快捷键     | 操作    |
+|------------|---------|
+| `Ctrl` `p` | 打开FZF |
+| `Ctrl` `u` | 上一项  |
+| `Ctrl` `e` | 下一项  |
 
 #### Undotree
-| Shortcut      | Action        |
-|---------------|---------------|
-| `Shift` + `L` | Open Undotree |
-| `Shift` + `K` | History go up |
-| `Shift` + `J` | History go down |
+| 快捷键        | 操作             |
+|---------------|------------------|
+| `Shift` + `L` | 打开Undotree     |
+| `Shift` + `K` | 历史修改的下一项 |
+| `Shift` + `J` | 历史修改的上一项 |
 
-#### Ranger.vim - file browser
-- [ ] Make sure you have ranger installed
-Press `R` to open Ranger (file selector)
+#### vim-startify (初始启动界面)
+键入`Space`-`s`-`t`以打开`startify`
 
-#### vim-startify - Startup screen
-Press `Space` `s` `t` to openup `startify`
+#### thesaurus_query.vim
+键入 `Space`-`t`-`h`查找近义词
 
-#### vim-signiture - Bookmarks
-| Shortcut    | Action                          | Command |
-|-------------|---------------------------------|---------|
-| `m<letter>` | Add/remove mark at current line |         |
-| `m/`        | List all marks                  |         |
-| `mSPACE`    | Jump to the next mark in buffer |         |
+#### vim-signiture (书签)
+| 快捷键        | 操作                         |
+|---------------|------------------------------|
+| `m<任意字母>` | 为当前行添加标记             |
+| `m/`          | 列出所有标记                 |
+| `m<SPACE>`    | 跳转至当前文件中的下一个标记 |
 
-For more commands, see [here](https://github.com/MattesGroeger/vim-bookmarks#usage)
+有关更多命令介绍，请参见 [此处](https://github.com/MattesGroeger/vim-bookmarks#usage)
+
+#### vim-table-mode
+使用`<Space>tm`(等同于命令:`TableModeToggle<CR>`)开关表格编辑模式。
 
 #### vim-multiple-cursors
-| Shortcut   | Action                              |
-|------------|-------------------------------------|
-| `Ctrl`+`k` | Select next word (multiple cursors) |
-| `Ctrl`+`p` | Select previous word                |
-| `Ctrl`+`x` | Skip word                           |
-| `Esc`      | Quit mutiple cursors                |
+| 快捷键     | 操作                    |
+|------------|-------------------------|
+| `Ctrl`+`k` | 选择下一个单词 (多光标) |
+| `Ctrl`+`p` | 选择上一个单词          |
+| `Ctrl`+`x` | 跳过这个单词            |
+| `Esc`      | 退出多光标              |
 
 #### vim-surround
-To add surround (`string` -> `"string"`):
+添加括号(引号等) (`string` -> `"string"`):
 ```
 string
 ```
-press: `yskw'`:
+键入: `yskw'`:
 ```
 'string'
 ```
 
-To change surround
+改变括号
 ```
 'string'
 ```
-press: `cs'"`:
+键入: `cs'"`:
 ```
 "string"
 ```
 
-#### far.vim - find and replace
-| Shortcut        | Action                   |
-|-----------------|--------------------------|
-| `SPACE` `f` `a` | Find in the current file |
-| `SPACE` `f` `r` | Find and replace         |
-
 #### fzf-gitignore
-Press `Space` `g` `i` to create a `.gitignore` file
-
-#### GV - commit browser
-| Shortcut | Action              |
-|----------|---------------------|
-| `g` `v`  | Open commit browser |
-| `q`      | Quit GV window      |
+键入 `Space` `g` `i` 来创建新的`.gitignore`文件
 
 #### vim-calc
-Press `Space` + `a` to calculate the equation in the current line
+键入`Space`+`a`计算当前行中的数学公式。
 
-#### vim-calendar
-| Shortcut | Action        |
-|----------|---------------|
-| `\` `\`  | Show clock    |
-| `\` `c`  | Show calendar |
-
-#### AutoFormat
-Press `\` `f` to format code
-
-#### Goyo - Work without distraction
-Press `g` `y` to toggle Goyo
-
-## Custom Snippets
+## 自定义 代码快捷输入
 #### Markdown
-| Shortcut | What it creates     |
-|----------|---------------------|
-| `,n`     | ---                 |
-| `,b`     | **Bold** text       |
-| `,s`     | ~~sliced~~ text     |
-| `,i`     | *italic* text       |
-| `,d`     | `code block`        |
-| `,c`     | big `block of code` |
-| `,m`     | - [ ] check mark    |
-| `,p`     | picture             |
-| `,a`     | [link]()            |
-| `,1`     | # H1                |
-| `,2`     | ## H2               |
-| `,3`     | ### H3              |
-| `,4`     | #### H4             |
-| `,l`     | --------            |
+| 快捷键 | 呈现效果       |
+|--------|----------------|
+| `,n`   | ---            |
+| `,b`   | 文本 **加粗**  |
+| `,s`   | 文本~~中划线~~ |
+| `,i`   | 文本 *斜体*    |
+| `,d`   | `代码块`       |
+| `,c`   | 大 `代码块`    |
+| `,m`   | - [ ] 复选框   |
+| `,p`   | 图片           |
+| `,a`   | [超链接]()     |
+| `,1`   | # 标题1        |
+| `,2`   | ## 标题2       |
+| `,3`   | ### 标题3      |
+| `,4`   | #### 标题4     |
+| `,l`   | --------       |
 
-`,f` to go to the next `<++>` (placeholder)
+`,f` 跳转到至下一个 `<++>` (占位符)
 
-`,w` to go to the next `<++>` (placeholder) and then press `Enter` for you
+`,w` 跳转至下一个 `<++>` (占位符) 然后帮你键入`Enter`
 
-## Other Weird Stuff
-#### Press `tx` and enter your text
-`tx Hello<Enter>`
-```
- _   _      _ _
-| | | | ___| | | ___
-| |_| |/ _ \ | |/ _ \
-|  _  |  __/ | | (_) |
-|_| |_|\___|_|_|\___/
-```
+
+## 其他有用的东西
+#### 键入 `<SPACE>fd` 高亮附近重复的单词
 

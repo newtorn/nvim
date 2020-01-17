@@ -1,10 +1,11 @@
-" __  ____   __  _   ___     _____ __  __ ____   ____
-"|  \/  \ \ / / | \ | \ \   / /_ _|  \/  |  _ \ / ___|
-"| |\/| |\ V /  |  \| |\ \ / / | || |\/| | |_) | |
-"| |  | | | |   | |\  | \ V /  | || |  | |  _ <| |___
-"|_|  |_| |_|   |_| \_|  \_/  |___|_|  |_|_| \_\\____|
+" _   _               _                    __     _____ __  __ ____   ____
+" | \ | | _____      _| |_ ___  _ __ _ __   \ \   / /_ _|  \/  |  _ \ / ___|
+" |  \| |/ _ \ \ /\ / / __/ _ \| '__| '_ \   \ \ / / | || |\/| | |_) | |
+" | |\  |  __/\ V  V /| || (_) | |  | | | |   \ V /  | || |  | |  _ <| |___
+" |_| \_|\___| \_/\_/  \__\___/|_|  |_| |_|    \_/  |___|_|  |_|_| \_\\____|
 
-" Author: @theniceboy
+
+" Author: @newtorn
 
 " Checkout-list
 " vim-esearch
@@ -21,9 +22,11 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 " ====================
 " === Editor Setup ===
 " ====================
+
 
 " ===
 " === System
@@ -31,44 +34,48 @@ endif
 "set clipboard=unnamed
 let &t_ut=''
 set autochdir
+set encoding=utf8
 
 
 " ===
 " === Editor behavior
 " ===
-set number
-set relativenumber
-set cursorline
-set noexpandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set autoindent
-set list
-set listchars=tab:\|\ ,trail:▫
-set scrolloff=4
-set ttimeoutlen=0
-set notimeout
-set viewoptions=cursor,folds,slash,unix
-set wrap
-set tw=0
-set indentexpr=
-set foldmethod=indent
-set foldlevel=99
-set foldenable
-set formatoptions-=tc
-set splitright
-set splitbelow
-set noshowmode
-set showcmd
-set wildmenu
-set ignorecase
-set smartcase
-set shortmess+=c
-set inccommand=split
-set ttyfast "should make scrolling faster
-set lazyredraw "same as above
-set visualbell
+set number                      " set line number
+set relativenumber              " set relative line number
+set cursorline                  " set cursor line show
+set expandtab                   " transfer tab to blankspace
+set backspace=indent,eol,start  " for fixing macOS vim backspace
+set tabstop=4                   " one tab equals blankspace numbers
+set shiftwidth=4                " one level indent space numbers
+set softtabstop=4               " make tab len show like shiftwidth len
+set autoindent                  " auto indent
+"set list                        " set invisble chars show
+"set listchars=tab:\|\ ,trail:▫  " set invisble chars replace
+set scrolloff=4                 " keep lines when cursor move to buffer top or bottom
+set ttimeoutlen=0               " set key press code judge time
+set viewoptions=cursor,folds,slash,unix " set remember cursor folds slash unix
+set wrap                        " set auto wrap too long line to multi lines
+set textwidth=0                 " set text width
+set indentexpr=                 " set indent type
+set foldmethod=indent           " set fold method on same indent lines
+set foldlevel=99                " set fold levels
+set foldenable                  " set fold enable
+set formatoptions-=tc           " set format text without textwidth and comments
+set splitright                  " set new buffer area will show on the right of current buffer
+set splitbelow                  " set new buffer area will show on the below of current buffer
+set noshowmode                  " set not show left-down status line
+set showcmd                     " show input command when command line mode
+set wildmenu                    " set fuzzy matching for command
+set ignorecase                  " set ignore upper lower case
+set smartcase                   " set smart case choice
+set shortmess+=c                " set no |ins-completion-menu| messages
+set inccommand=split            " just for neovim, changes caused by real-time display of ex command
+set ttyfast                     " should make scrolling faster
+set lazyredraw                  " disable in middle of macro redraw buffer
+set visualbell                  " set custom status line
+set colorcolumn=80              " set current cursor column line color
+set updatetime=1000             " set save file every amount of ms
+" backup and undo
 silent !mkdir -p ~/.config/nvim/tmp/backup
 silent !mkdir -p ~/.config/nvim/tmp/undo
 set backupdir=~/.config/nvim/tmp/backup,.
@@ -77,8 +84,6 @@ if has('persistent_undo')
 	set undofile
 	set undodir=~/.config/nvim/tmp/undo,.
 endif
-set colorcolumn=80
-set updatetime=1000
 
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -124,11 +129,11 @@ noremap <LEADER>rc :e ~/.config/nvim/init.vim<CR>
 noremap <LEADER>st :Startify<CR>
 
 " Undo operations
-noremap l u
+" noremap l u
 
 " Insert Key
-noremap k i
-noremap K I
+" noremap k i
+" noremap K I
 
 " make Y to copy till the end of the line
 nnoremap Y y$
@@ -162,34 +167,31 @@ noremap <c-g> :term lazygit<CR>
 " ===
 " New cursor movement (the default arrow keys are used for resizing windows)
 "     ^
-"     u
-" < n   i >
-"     e
+"     k
+" < h   l >
+"     j
 "     v
-noremap <silent> u k
-noremap <silent> n h
-noremap <silent> e j
-noremap <silent> i l
+" noremap <silent> u k
+" noremap <silent> n h
+" noremap <silent> e j
+" noremap <silent> i l
 
-" U/E keys for 5 times u/e (faster navigation)
-noremap <silent> U 5k
-noremap <silent> E 5j
+" K/J keys for 5 times u/e (faster navigation)
+noremap <silent> K 5k
+noremap <silent> J 5j
 
-" N key: go to the start of the line
-noremap <silent> N 0
-" I key: go to the end of the line
-noremap <silent> I $
+" H key: go to the start of the line
+noremap <silent> H 0
+" L key: go to the end of the line
+noremap <silent> L $
 
 " Faster in-line navigation
 noremap W 5w
 noremap B 5b
 
-" set h (same as n, cursor left) to 'end of word'
-noremap h e
-
-" Ctrl + U or E will move up/down the view port without moving the cursor
-noremap <C-U> 5<C-y>
-noremap <C-E> 5<C-e>
+" Ctrl + H or L will move up/down the view port without moving the cursor
+noremap <C-H> 5<C-y>
+noremap <C-L> 5<C-e>
 
 " ===
 " === Insert Mode Cursor Movement
@@ -202,10 +204,14 @@ inoremap <C-a> <ESC>A
 " ===
 " Use <space> + new arrow keys for moving the cursor around windows
 noremap <LEADER>w <C-w>w
-noremap <LEADER>u <C-w>k
-noremap <LEADER>e <C-w>j
-noremap <LEADER>n <C-w>h
-noremap <LEADER>i <C-w>l
+" noremap <LEADER>u <C-w>k
+" noremap <LEADER>e <C-w>j
+" noremap <LEADER>n <C-w>h
+" noremap <LEADER>i <C-w>l
+noremap <LEADER>k <C-w>k
+noremap <LEADER>j <C-w>j
+noremap <LEADER>h <C-w>h
+noremap <LEADER>l <C-w>l
 
 " Disable the default s key
 noremap s <nop>
@@ -289,11 +295,27 @@ noremap tx :r !figlet
 noremap <LEADER>- :lN<CR>
 noremap <LEADER>= :lne<CR>
 
+" Makefil build and run
+noremap mb :call Make("build")<CR>
+noremap mr :call Make("run")<CR>
+func! Make(mt)
+    exec 'w'
+    set splitbelow
+    :sp
+    if a:mt == 'build'
+        :term make build
+    elseif a:mt == 'run'
+        :term make run
+    else
+        :term make
+    endif
+endfunc
+
 " Compile function
 noremap r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
+    exec 'w'
+    if &filetype == 'c'
 		exec "!g++ % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
@@ -312,7 +334,8 @@ func! CompileRunGcc()
 		:sp
 		:term python3 %
 	elseif &filetype == 'html'
-		silent! exec "!chromium % &"
+		silent! exec "!open % &"
+        " silent! exec "!chromium % &"
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
 	elseif &filetype == 'tex'
@@ -347,6 +370,10 @@ Plug 'ayu-theme/ayu-vim'
 "Plug 'mhartington/oceanic-next'
 "Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'ajmwagar/vim-deus'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Genreal Highlighter
 Plug 'jaxbot/semantic-highlight.vim'
@@ -355,6 +382,7 @@ Plug 'chrisbra/Colorizer' " Show colors with :ColorHighlight
 " File navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'yuki-ycino/fzf-preview.vim'
 "Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
@@ -369,6 +397,7 @@ Plug 'dense-analysis/ale'
 
 " Auto Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nine2/vim-copyright'
 
 " Snippets
 Plug 'SirVer/ultisnips'
@@ -426,6 +455,7 @@ Plug 'godlygeek/tabular' " type ;Tabularize /= to align the =
 Plug 'tpope/vim-capslock'	" Ctrl+L (insert) to toggle capslock
 Plug 'easymotion/vim-easymotion'
 Plug 'Konfekt/FastFold'
+Plug 'mhinz/vim-startify'
 
 " Input Method Autoswitch
 Plug 'rlue/vim-barbaric'
@@ -498,7 +528,7 @@ set background=dark
 "let g:one_allow_italics = 1
 
 
-"color dracula
+" color dracula
 "color one
 color deus
 "color gruvbox
@@ -511,12 +541,15 @@ hi NonText ctermfg=gray guifg=grey10
 
 " ===================== Start of Plugin Settings =====================
 
-let g:airline_powerline_fonts = 0
-
+"let g:airline_powerline_fonts = 0
+set laststatus=2  "永远显示状态栏
+let g:airline_powerline_fonts = 1  " 支持 powerline 字体
+let g:airline#extensions#tabline#enabled = 1 " 显示窗口tab和buffer
 
 " ===
 " === NERDTree
 " ===
+set guifont=UbuntuMono_Nerd_Font:h13
 noremap tt :NERDTreeToggle<CR>
 let NERDTreeMapOpenExpl = ""
 let NERDTreeMapUpdir = "N"
@@ -541,7 +574,7 @@ let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_preview_win_floating = 1
 autocmd BufWritePost * GitGutter
 nnoremap <LEADER>gf :GitGutterFold<CR>
-nnoremap H :GitGutterPreviewHunk<CR>
+nnoremap GG :GitGutterPreviewHunk<CR>
 nnoremap <LEADER>g- :GitGutterPrevHunk<CR>
 nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 
@@ -549,6 +582,9 @@ nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 " ==
 " == NERDTree-git
 " ==
+let g:NERDTreeHidden=0
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.pyc$', '\.swp', '\.swo', '\.git', '\.idea', '\.vscode', '__pycache__', '\.DS_Store'] 
 let g:NERDTreeIndicatorMapCustom = {
 			\ "Modified"	: "✹",
 			\ "Staged"		: "✚",
@@ -561,6 +597,14 @@ let g:NERDTreeIndicatorMapCustom = {
 			\ "Unknown"	 : "?"
 			\ }
 
+
+" ===
+" === NERDCommenter
+" === 
+let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDToggleCheckAllLines = 1
+let g:NERDCommentEmptyLines = 1
 
 " ===
 " === coc
@@ -746,10 +790,10 @@ let g:undotree_WindowLayout = 2
 let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
 function g:Undotree_CustomMap()
-	nmap <buffer> u <plug>UndotreeNextState
-	nmap <buffer> e <plug>UndotreePreviousState
-	nmap <buffer> U 5<plug>UndotreeNextState
-	nmap <buffer> E 5<plug>UndotreePreviousState
+	nmap <buffer> k <plug>UndotreeNextState
+	nmap <buffer> j <plug>UndotreePreviousState
+	nmap <buffer> K 5<plug>UndotreeNextState
+	nmap <buffer> J 5<plug>UndotreePreviousState
 endfunc
 
 
@@ -868,16 +912,16 @@ let g:calendar_google_task = 1
 augroup calendar-mappings
 	autocmd!
 	" diamond cursor
-	autocmd FileType calendar nmap <buffer> u <Plug>(calendar_up)
-	autocmd FileType calendar nmap <buffer> n <Plug>(calendar_left)
-	autocmd FileType calendar nmap <buffer> e <Plug>(calendar_down)
-	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_right)
-	autocmd FileType calendar nmap <buffer> <c-u> <Plug>(calendar_move_up)
-	autocmd FileType calendar nmap <buffer> <c-n> <Plug>(calendar_move_left)
-	autocmd FileType calendar nmap <buffer> <c-e> <Plug>(calendar_move_down)
-	autocmd FileType calendar nmap <buffer> <c-i> <Plug>(calendar_move_right)
-	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_start_insert)
-	autocmd FileType calendar nmap <buffer> K <Plug>(calendar_start_insert_head)
+	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_up)
+	autocmd FileType calendar nmap <buffer> <c-h> <Plug>(calendar_move_left)
+	autocmd FileType calendar nmap <buffer> <c-j> <Plug>(calendar_move_down)
+	autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_right)
+	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_start_insert)
+	autocmd FileType calendar nmap <buffer> I <Plug>(calendar_start_insert_head)
 	" unmap <C-n>, <C-p> for other plugins
 	autocmd FileType calendar nunmap <buffer> <C-n>
 	autocmd FileType calendar nunmap <buffer> <C-p>
@@ -1087,7 +1131,7 @@ let g:vim_jsx_pretty_colorful_config = 1
 "nnoremap \= :set spell<CR>:Denite -smartcase=true spell<CR>
 "nnoremap <c-t> :Denite -smartcase=true outline -start-filter<CR>
 
-"hi link deniteMatchedChar Special
+hi link deniteMatchedChar Special
 
 
 " ===
@@ -1110,6 +1154,15 @@ let g:perl_fold_blocks = 1
 let g:r_syntax_folding = 1
 let g:rust_fold = 1
 let g:php_folding = 1
+
+command HelpCustom call system('open -a "/Applications/Google Chrome.app" ~/.config/nvim/README.md')
+
+
+" ===
+" === copyright
+" ===
+let g:file_copyright_name = "newtorn"
+let g:file_copyright_email = "codertorn@gmail.com"
 
 
 " ===================== End of Plugin Settings =====================
