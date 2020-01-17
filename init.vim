@@ -397,7 +397,7 @@ Plug 'dense-analysis/ale'
 
 " Auto Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nine2/vim-copyright'
+Plug 'newtorn/vim-copyright'
 
 " Snippets
 Plug 'SirVer/ultisnips'
